@@ -1,0 +1,54 @@
+{
+    "apis": [
+        {
+            "description": "test api", 
+            "operations": [
+                {
+                    "errorResponses": [
+                    ], 
+                    "httpMethod": "POST", 
+                    "nickname": "test call", 
+                    "parameters": [
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "first query parameter", 
+                            "name": "q1", 
+                            "paramType": "query", 
+                            "required": true
+                        }, 
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "second query parameter", 
+                            "name": "q2", 
+                            "paramType": "query", 
+                            "required": false
+                        },  
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "first body parameter", 
+                            "name": "b1", 
+                            "paramType": "body", 
+                            "required": true
+                        },
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "second body parameter", 
+                            "name": "b2", 
+                            "paramType": "body", 
+                            "required": false
+                        }
+                    ], 
+                    "summary": "Call to test the API"
+                }, 
+            ], 
+            "path": "/action.do"
+        }
+    ], 
+    "basePath": "http://localhost/api/v0.1",
+    "resourcePath": "", 
+    "swaggerVersion": "1.1"
+}
