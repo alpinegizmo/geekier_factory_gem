@@ -69,7 +69,7 @@ module GeekierFactory
     def handle_response!(response)
       if @structure['errorResponses'].map{ |er| er['code'] }.include? response.status
         ex = @structure['errorResponses'].select{ |er| er['code'] == response.status }
-        if ex['retry'] == true && (@retries ||= 0) < ex[  ]
+        if ex['retry'] == true && (@retries ||= 0) < ex['retry']
           @retries += 1
           raise Retry.new
         else
