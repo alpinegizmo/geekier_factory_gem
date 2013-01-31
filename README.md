@@ -1,23 +1,18 @@
-Synopsis
-========
+#Synopsis
 
 Ruby gem for using APIs, based on their Geekier API descriptions.
 
-Installation
-============
+#Installation
 
-Gemfile
--------
+##Gemfile
 
 `gem "geekier_factory"`
 
-Standalone
-----------
+##Standalone
 
 `gem install geekier_factory`
 
-Usage
-=====
+#Usage
 
 Download the API definition you want to use.
 
@@ -40,8 +35,7 @@ Download the API definition you want to use.
 
 And that's how you do it.
 
-TODO
-====
+#TODO
 
 (in no particular order)
 
