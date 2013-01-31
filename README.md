@@ -35,6 +35,12 @@ Download the API definition you want to use.
 
 And that's how you do it.
 
+#Participate
+
+* fork && commit && send\_pull\_request
+* add [more API definitions](https://github.com/geekier/geekier)
+* join the [Geekier Google group](https://groups.google.com/d/forum/geekier-apis)
+
 #TODO
 
 (in no particular order)
