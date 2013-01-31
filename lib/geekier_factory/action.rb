@@ -73,7 +73,9 @@ module GeekierFactory
           @retries += 1
           raise Retry.new
         else
-          raise ConnectionException.new("#{ex[:reason]} (HTTP status code #{ex[:code]})")
+          message = "#{ex[:reason]} (HTTP status code #{ex[:code]})"
+          message = message + "\n\n" + response[:body] if ex['details'] && ex['details'] == 'body'
+          raise ConnectionException.new(message)
         end
       elsif !response.success?
         raise ConnectionException.new
