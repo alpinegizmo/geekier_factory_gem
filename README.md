@@ -38,7 +38,7 @@ And that's how you do it.
 #Participate
 
 * fork && commit && send\_pull\_request
-* add [more API definitions](https://github.com/geekier/geekier)
+* add [more API definitions](https://github.com/rulesio/geekier)
 * join the [Geekier Google group](https://groups.google.com/d/forum/geekier-apis)
 
 #TODO
