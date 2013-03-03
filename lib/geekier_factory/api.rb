@@ -6,7 +6,7 @@ module GeekierFactory
   class API
     def initialize(structure)
       @structure = structure
-      @actions = @structure['apis'].map{ |api| api['operations'].map{ |op| Action.new(self, op.merge('path' => api['path'])) } }.flatten
+      @actions = Hash[@structure['apis'].map{ |api| [api['description'], api['operations'].map{ |op| Action.new(self, op.merge('path' => api['path'])) }] }]
     end
 
     def log_body?

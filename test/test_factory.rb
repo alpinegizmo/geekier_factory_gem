@@ -6,7 +6,7 @@ class TestFactory < Test::Unit::TestCase
   
   setup do
     @api = GeekierFactory.factorize(File.join(File.dirname(File.expand_path(__FILE__)), 'mock_definition.json'))
-    @action = @api.available_actions.first
+    @action = @api.available_actions["test api"].first
   end
 
   test "api should be factorized" do
@@ -14,8 +14,10 @@ class TestFactory < Test::Unit::TestCase
     assert @api.is_a? GeekierFactory::API
   end
 
-  test "api should have one action" do
+  test "api should have one operation with action" do
     assert_equal 1, @api.available_actions.size
+    assert @api.available_actions.is_a? Hash
+    assert_equal 1, @api.available_actions["test api"].size
   end
 
   test "action should have 4 parameters" do
