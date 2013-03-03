@@ -72,12 +72,12 @@ module GeekierFactory
     ConnectionException = Class.new(Exception)
     def handle_response!(response)
       if error_responses.map{ |er| er['code'] }.include? response.status
-        ex = @structure['errorResponses'].select{ |er| er['code'] == response.status }
-        if ex['retry'] == true && (@retries ||= 0) < ex['retry']
+        ex = error_responses.find{ |er| er['code'] == response.status }
+        if ex.has_key?('retry') && (@retries ||= 0) < ex['retry'].to_i
           @retries += 1
           raise Retry.new
         else
-          message = "#{ex[:reason]} (HTTP status code #{ex[:code]})"
+          message = "#{ex['reason']} (HTTP status code #{ex['code']})"
           message = message + "\n\n" + response[:body] if ex['details'] && ex['details'] == 'body'
           raise ConnectionException.new(message)
         end
