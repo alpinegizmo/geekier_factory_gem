@@ -61,6 +61,7 @@ module GeekierFactory
       handle_response!(response)
       {:request => reqhash, :response => response}
     rescue Retry => e
+      sleep 0.5
       retry
     end
     
