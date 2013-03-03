@@ -63,11 +63,15 @@ module GeekierFactory
     rescue Retry => e
       retry
     end
+    
+    def error_responses
+      (@structure['errorResponses'] || []) + @api.error_responses
+    end
 
     Retry = Class.new(Exception)
     ConnectionException = Class.new(Exception)
     def handle_response!(response)
-      if (@structure['errorResponses'] + @api.error_responses).map{ |er| er['code'] }.include? response.status
+      if error_responses.map{ |er| er['code'] }.include? response.status
         ex = @structure['errorResponses'].select{ |er| er['code'] == response.status }
         if ex['retry'] == true && (@retries ||= 0) < ex['retry']
           @retries += 1
