@@ -48,6 +48,8 @@
             "path": "/action.do"
         }
     ], 
+    "errorResponses": [
+    ], 
     "basePath": "http://localhost/api/v0.1",
     "resourcePath": "", 
     "swaggerVersion": "1.1"

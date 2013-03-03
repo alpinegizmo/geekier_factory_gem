@@ -34,6 +34,10 @@ module GeekierFactory
     def base_url
       @structure['basePath'].end_with?('/') ? @structure['basePath'] : (@structure['basePath'] + '/')
     end
+    
+    def error_responses
+      @structure['errorResponses'] || []
+    end
 
     # def oauth?
     #   true
