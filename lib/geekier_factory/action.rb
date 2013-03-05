@@ -1,5 +1,7 @@
 module GeekierFactory  
   class Action
+    AttributesMissing = Class.new(Exception)
+
     def initialize(api, structure)
       @api = api
       @structure = structure
@@ -11,6 +13,10 @@ module GeekierFactory
     
     def body_params
       params.select{ |p| p['paramType'] == 'body' }
+    end
+
+    def path_params
+      params.select{ |p| p['paramType'] == 'path' }
     end
 
     def url_params
@@ -27,8 +33,21 @@ module GeekierFactory
       param_values.select{ |k,v| names.include?(k.to_s) }
     end
 
+    def path_hash(param_values)
+      names = path_params.map{ |p| p['name'] }
+      param_values.select{ |k,v| names.include?(k.to_s) }
+    end
+
     def build_url(param_values)
-      api_connection.build_url(path, url_hash(param_values))
+      vals = path_hash(param_values)
+      if (as = (path_variables - vals.keys.map(&:to_s))).any?
+        raise AttributesMissing.new(as)
+      end
+      p = path
+      vals.each do |k, v|
+        p = p.sub("{#{k}}", v)
+      end
+      api_connection.build_url(p, url_hash(param_values))
     end
 
     def build_body(param_values)
@@ -41,6 +60,10 @@ module GeekierFactory
     
     def path
       @structure['path'].start_with?('/') ? @structure['path'][1..-1] : @structure['path']
+    end
+    
+    def path_variables
+      path.scan(/\{(\w*)\}/).flatten
     end
 
     def request_hash(param_values)

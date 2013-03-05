@@ -40,12 +40,28 @@
                             "name": "b2", 
                             "paramType": "body", 
                             "required": false
+                        },  
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "specify action", 
+                            "name": "action", 
+                            "paramType": "path", 
+                            "required": true
+                        },
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "string", 
+                            "description": "specify format", 
+                            "name": "format", 
+                            "paramType": "path", 
+                            "required": true
                         }
                     ], 
                     "summary": "Call to test the API"
                 }, 
             ], 
-            "path": "/action.do"
+            "path": "/{action}.{format}"
         }
     ], 
     "errorResponses": [

@@ -21,8 +21,8 @@ class TestFactory < Test::Unit::TestCase
   end
 
   test "action should have 4 parameters" do
-    assert_equal 4, @action.params.size
-    assert_equal ['q1', 'q2', 'b1', 'b2'], @action.params.map{ |p| p['name'] }
+    assert_equal 6, @action.params.size
+    assert_equal ['q1', 'q2', 'b1', 'b2', 'action', 'format'], @action.params.map{ |p| p['name'] }
   end
 
   test "action should have 2 body and 2 query parameters and they should be different" do
@@ -32,8 +32,8 @@ class TestFactory < Test::Unit::TestCase
   end
 
   test "calling the action should call the right url" do
-    stub_http_request(:post, "localhost/api/v0.1/action.do").
+    stub_http_request(:post, "localhost/api/v0.1/call.json").
       with(:body => {:b1 => "body", :b2 => "test"}, :query => {:q1 => 'testing', :q2 => 'query'})
-    @action.call(:b1 => "body", :b2 => "test", :q1 => 'testing', :q2 => 'query')
+    @action.call(:b1 => "body", :b2 => "test", :q1 => 'testing', :q2 => 'query', :action => 'call', :format => 'json')
   end
 end
