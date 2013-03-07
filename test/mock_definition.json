@@ -40,6 +40,19 @@
                             "name": "b2", 
                             "paramType": "body", 
                             "required": false
+                        },
+                        {
+                            "allowMultiple": false, 
+                            "dataType": "int", 
+                            "description": "third body parameter - integer", 
+                            "name": "b3", 
+                            "paramType": "body", 
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "RANGE",
+                                "min": 1,
+                                "max": 5
+                            }
                         },  
                         {
                             "allowMultiple": false, 
@@ -55,7 +68,11 @@
                             "description": "specify format", 
                             "name": "format", 
                             "paramType": "path", 
-                            "required": true
+                            "required": false,
+                            "allowableValues": {
+                                "valueType": "LIST",
+                                "values": ["json", "yaml"]
+                            }
                         }
                     ], 
                     "summary": "Call to test the API"

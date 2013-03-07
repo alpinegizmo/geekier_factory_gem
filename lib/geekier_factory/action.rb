@@ -1,6 +1,7 @@
 module GeekierFactory  
   class Action
     AttributesMissing = Class.new(Exception)
+    ValidationException = Class.new(Exception)
 
     def initialize(api, structure)
       @api = api
@@ -78,7 +79,8 @@ module GeekierFactory
       @api.api_connection
     end
 
-    def call(param_values)
+    def call(param_values = {})
+      validate_parameter_values(param_values)
       reqhash = request_hash(param_values)
       response = api_connection.run_request(reqhash[:verb], reqhash[:url], reqhash[:body], reqhash[:headers])
       handle_response!(response)
@@ -86,6 +88,46 @@ module GeekierFactory
     rescue Retry => e
       sleep 0.5
       retry
+    end
+    
+    def validate_parameter_values(param_values)
+      errors = Hash.new { |hash,key|hash[key] = [] }
+
+      param_values.each do |k,v|
+        parameter = params.detect{|p| p['name'] == k.to_s}
+
+        errors[k] << "expected to be #{parameter['dataType']} (was #{p.class})" unless case parameter['dataType']
+                                                                                       when 'byte'
+                                                                                         true
+                                                                                       when 'string'
+                                                                                         v.is_a?(String)
+                                                                                       when 'boolean'
+                                                                                         v.is_a?(TrueClass) ||
+                                                                                         v.is_a?(FalseClass)
+                                                                                       when 'int'
+                                                                                         v.is_a?(Integer)
+                                                                                       when 'float'
+                                                                                         v.is_a?(Float)
+                                                                                       when 'double'
+                                                                                         v.is_a?(Double)
+                                                                                       when 'Date'
+                                                                                         (v.is_a?(Date) || Date.parse(v)) rescue false
+                                                                                       end
+
+        if parameter.has_key?('allowableValues')
+          vals = case parameter['allowableValues']['valueType']
+          when 'RANGE'
+            Range.new(parameter['allowableValues']['min'].to_i, parameter['allowableValues']['max'].to_i)
+          when 'LIST'
+            parameter['allowableValues']['values']
+          end
+          errors[k] << "expected to be one of #{vals}" unless vals.include?(v)
+        end
+      end
+
+      if errors.any?
+        raise ValidationException.new(errors.inspect)
+      end
     end
     
     def error_responses
