@@ -1,0 +1,7 @@
+- tests, tests, tests
+- allow_multiple
+- models
+- model serialization
+- authentication w/ api object level configuration for it
+- oauth
+- support for other request/response formats than json
